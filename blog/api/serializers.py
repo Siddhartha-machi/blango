@@ -9,6 +9,11 @@ class TagField(serializers.SlugRelatedField):
         except :
             self.fail(f"Tag value {data} is invalid")
 
+            
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = "__all__"
 
 
         
