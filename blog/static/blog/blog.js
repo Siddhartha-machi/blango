@@ -1,3 +1,5 @@
+
+
 class PostRow extends React.Component {
   render () {
     const post = this.props.post
@@ -25,24 +27,31 @@ class PostRow extends React.Component {
 
 class PostTable extends React.Component {
   state = {
-    dataLoaded: true,
-    data: {
-      results: [
-        {
-            "id": 6,
-            "tags": [
-                "A test tag"
-            ],
-            "hero_image": {
-                "thumbnail": "http://balistar-scoopformula-8000.codio.io/media/__sized__/hero_images/8018-thumbnail-100x100-70.jpg",
-                "full_size": "http://balistar-scoopformula-8000.codio.io/media/hero_images/8018.jpg"
-            },
-            "title": "adding an image",
-            "slug": "adding-an-image",
-            "summary": "Adding image",
+    dataLoaded: false,
+    data: null
+  }
+  
+  componentDidMount () {
+    fetch(this.props.url).then(response => {
+      if (response.status !== 200) {
+        throw new Error('Invalid status from server: ' + response.statusText)
+      }
+
+      return response.json()
+    }).then(data => {
+      this.setState({
+        dataLoaded: true,
+        data: data
+      })
+    }).catch(e => {
+      console.error(e)
+      this.setState({
+        dataLoaded: true,
+        data: {
+          results: []
         }
-      ]
-    }
+      })
+    })
   }
 
   render () {
@@ -81,6 +90,10 @@ class PostTable extends React.Component {
 
 const domContainer = document.getElementById('react_root')
 ReactDOM.render(
-  React.createElement(PostTable),
+  React.createElement(
+    PostTable,
+    {url: postListUrl}
+    ),
   domContainer
 )
+

@@ -4,15 +4,15 @@ from blog.forms import CommentForm
 from blog.models import Post
 import logging
 from django.utils import timezone
-
-#from django.views.decorators.cache import cache_page
-#from django.views.decorators.vary import vary_on_cookie
+from django.urls import reverse
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
 
 logger = logging.getLogger(__name__)
 
 # Create your views here.
-#@cache_page(3)
-#@vary_on_cookie
+@cache_page(3)
+@vary_on_cookie
 def index(request):
     
     #posts = Post.objects.all()
@@ -54,4 +54,6 @@ def get_ip(request):
 
 
 def post_table(request):
-    return render(request , 'blog/post-table.html')
+    return render(
+        request, "blog/post-table.html", {"post_list_url": reverse("post-list")}
+    )
