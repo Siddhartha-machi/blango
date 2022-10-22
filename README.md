@@ -1,7 +1,6 @@
 # blango
 
-Starting point for the Advanced Django course. This is the equivalent of the following command:
+A  blog web application written using Django framework and Front-end technologies.
+This application also has support for REST API and has fully functioning api views.
 
-```bash
-$ django-admin.py startproject blango
-```
+Application runs on Codio platform varying hosts so not accessible on internet.
